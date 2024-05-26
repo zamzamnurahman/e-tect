@@ -12,7 +12,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 function DashboardScreen() {
   let navigate = useNavigate();
 
-  const [data, setData] = useState<BaseState<User[]>>();
+  const [data, setData] = useState<BaseState<any[]>>();
   let users: User[] | undefined = data?.data;
 
   useEffect(() => {
@@ -36,6 +36,13 @@ function DashboardScreen() {
         return CardUser(item, (e: any) => handleClick(e, item._id));
       });
     }
+  }
+
+  function handleSearch(e: any) {
+    e.preventDefault();
+    let fullname = e.target.value;
+    if (fullname === '') UserApi.getAllUser(1, setData);
+    UserApi.searchUser(fullname, setData);
   }
 
   function numberPageIndicator() {
@@ -94,6 +101,7 @@ function DashboardScreen() {
               name="search"
               id="search"
               placeholder={'Silahkan cari dengan nama'}
+              onChange={(e) => handleSearch(e)}
             />
           </div>
         </div>

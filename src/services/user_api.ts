@@ -51,4 +51,24 @@ export class UserApi {
       setData(BaseState.error(`Error get data ${userId} from server`));
     }
   }
+
+  // search user by fullname
+  static async searchUser(fullname: string, setData: any) {
+    setData(BaseState.loading());
+    try {
+      let url: string = `${ConstantApp.BASEURL}/users/search/${fullname}`;
+      let response = await axios.get(url);
+      if (response.status === 200) {
+        let responseJson = response.data.data;
+        // change to model engagement
+        let users: User[] = responseJson.map((item: any) => item as User);
+        setData(BaseState.success(users));
+      } else {
+        setData(BaseState.error(`Error get data ${fullname} from server`));
+      }
+    } catch (error) {
+      console.error(error);
+      setData(BaseState.error(`Error get data ${fullname} from server`));
+    }
+  }
 }
