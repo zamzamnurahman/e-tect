@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import Logo from '../../assets/logo192.png';
-import { ConstantApp } from '../../constant/constant';
 import { BaseState } from '../../models/base_state';
 import { User } from '../../models/user';
 import { UserApi } from '../../services/user_api';
@@ -8,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { CardUser, CardUserLoading } from '../components/card_user';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import Navbar from '../components/navbar';
 
 function DashboardScreen() {
   let navigate = useNavigate();
@@ -68,26 +67,8 @@ function DashboardScreen() {
 
   return (
     <>
-      <nav className="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
-        <div className=" flex flex-wrap items-center justify-center md:justify-between mx-auto p-5">
-          <div className={'flex'}>
-            <img
-              src={Logo}
-              alt=""
-              className={'h-12 w-12 md:mr-5'}
-              onClick={(e) => {
-                console.log(`current page ${data?.page! + 1}`);
-              }}
-            />
-            <a
-              href="/"
-              className="flex items-center space-x-3 rtl:space-x-reverse"
-            >
-              <span className="self-center text-2xl font-semibold whitespace-nowrap">
-                {ConstantApp.NAME}
-              </span>
-            </a>
-          </div>
+      <Navbar
+        actions={
           <div className={'flex items-center w-full md:w-[30%] p-2'}>
             <FontAwesomeIcon
               icon={faSearch}
@@ -104,8 +85,8 @@ function DashboardScreen() {
               onChange={(e) => handleSearch(e)}
             />
           </div>
-        </div>
-      </nav>
+        }
+      />
       <div className={'m-3 pt-32 pb-10 grid grid-cols-2 md:grid-cols-6 gap-4'}>
         {listComponent()}
       </div>
