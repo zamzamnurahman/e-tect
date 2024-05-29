@@ -40,7 +40,6 @@ export class UserApi {
       let response = await axios.get(url);
       if (response.status === 200) {
         let responseJson = response.data;
-        console.log(responseJson);
 
         // change to model engagement
         let user: User = responseJson as User;

@@ -6,4 +6,5 @@ export interface Course {
 export interface CourseData {
   course: number;
   courseName: string;
+  isSelected: boolean;
 }
