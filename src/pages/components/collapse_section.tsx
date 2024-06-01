@@ -25,7 +25,11 @@ function CollapseSection(props: any) {
         </div>
       </div>
       <div {...getCollapseProps()}>
-        <div className={`${isExpanded ? 'mt-3' : ''} rounded-lg bg-gray-200`}>
+        <div
+          className={`${isExpanded ? 'mt-3' : ''} rounded-lg ${
+            props.background ?? 'bg-gray-200'
+          }`}
+        >
           {props.children}
         </div>
       </div>

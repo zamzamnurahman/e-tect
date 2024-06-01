@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faUser, faBook } from '@fortawesome/free-solid-svg-icons';
-import { EngagementApi } from '../../services/engagement_api';
+import { ProctoringApi } from '../../services/proctoring_api';
 import { BaseState } from '../../models/base_state';
 import { DataEngagement } from '../../models/engagement';
 import { datetimeFormatted } from '../../utils/extensions/datetime_formatted';
@@ -34,7 +34,7 @@ function DetailScreen() {
   const { id } = useParams();
   const [data, setData] = useState<BaseState<DataEngagement[]>>();
   useEffect(() => {
-    EngagementApi.getDetailEngagement(id!, setData);
+    ProctoringApi.getDetailProctoring(id!, setData);
   }, []);
 
   function groupByExpression() {
