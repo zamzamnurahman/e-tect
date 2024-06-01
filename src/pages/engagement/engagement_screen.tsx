@@ -16,6 +16,7 @@ import { ExpressionImageApi } from '../../services/expression_api';
 import { EngagementApi } from '../../services/engagement_api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPoll } from '@fortawesome/free-solid-svg-icons';
+import { selectEmoji } from '../../utils/helpers/select_emoji';
 
 function EngagementScreen() {
   const { userId } = useParams();
@@ -48,7 +49,7 @@ function EngagementScreen() {
       <div className="py-28 px-5 md:px-20">
         <div className="flex justify-between items-center">
           <BackButton title={`Engagement Menu`} />
-          <h1 className="w-full h-full text-end">
+          <h1 className="w-[50%] md:w-full h-full text-end text-sm md:text-md">
             {stateEngagement?.data?.details.courseName} /{' '}
             {stateEngagement?.data?.details.quiz_name}
           </h1>
@@ -58,7 +59,7 @@ function EngagementScreen() {
 
         <CollapseSection
           title={`Proctoring Image (${stateProctoring?.totalData ?? 0} image)`}
-          defaultExpanded={true}
+          defaultExpanded={false}
           children={
             <div>
               {stateProctoring?.loading ? (
@@ -82,7 +83,7 @@ function EngagementScreen() {
         />
         <CollapseSection
           title={`Cleaning Image (${stateCleaning?.totalData ?? 0} image)`}
-          defaultExpanded={true}
+          defaultExpanded={false}
           children={
             <div>
               {stateCleaning?.loading ? (
@@ -106,7 +107,7 @@ function EngagementScreen() {
         />
         <CollapseSection
           title={`Expressions Image (${stateExpression?.totalData ?? 0} image)`}
-          defaultExpanded={true}
+          defaultExpanded={false}
           children={
             <div>
               {stateExpression?.loading ? (
@@ -118,18 +119,18 @@ function EngagementScreen() {
                       return (
                         <div
                           key={index}
-                          className="h-[150px] w-[100px] md:h-[250px] md:w-[200px] mr-5 mb-5 flex flex-col items-center bg-slate-100 rounded-lg border-black"
+                          className="h-[180px] w-[100px] md:h-[250px] md:w-[200px] mr-3 md:mr-5 mb-5 p-2 flex flex-col items-center justify-between bg-slate-100 rounded-lg border-black"
                         >
                           <img
                             className="h-[100px] w-full md:h-[200px] object-cover"
                             src={item.image_url}
                             alt={item.image_url}
                           />
-                          <div className="w-full flex justify-between">
-                            <p className="w-full p-2 font-bold text-white bg-blue-400 rounded-md text-center">
+                          <div className="w-full flex flex-col md:flex-row justify-between items-center">
+                            <p className="w-full p-1 text-sm md:text-md font-bold border border-black rounded-md text-center">
                               {item.expression.toUpperCase()}
                             </p>
-                            <p className="w-full p-2 font-bold bg-yellow-400 rounded-md text-center">
+                            <p className="w-full p-1 text-sm md:text-md font-bold border border-black rounded-md text-center">
                               {(item.cf_score * 100).toFixed(2)} %
                             </p>
                           </div>
@@ -144,9 +145,9 @@ function EngagementScreen() {
         />
 
         <CollapseSection
-          background="bg-white"
+          background={stateEngagement?.loading ? null : 'bg-white'}
           title={`Engagement Image (${
-            stateEngagement?.totalData ?? 0
+            stateEngagement?.data?.expressions.length ?? 0
           } Expression)`}
           defaultExpanded={true}
           children={
@@ -160,22 +161,31 @@ function EngagementScreen() {
                       return (
                         <div
                           key={index}
-                          className="w-full my-5 p-5 bg-slate-100 rounded-lg"
+                          className="w-full my-5 p-2 md:p-5 bg-slate-100 rounded-lg"
                         >
                           <div className="mb-3">
-                            <h1 className="text-2xl font-bold ">
-                              {item.expression.toUpperCase()} (
-                              {item.expression.length} gambar)
-                            </h1>
-                            <h1 className="text-xl my-3 ">
+                            <div className="flex items-center">
+                              <FontAwesomeIcon
+                                icon={selectEmoji(item.expression)}
+                                className="mr-3 h-5 w-5 md:h-7 md:w-7 "
+                              />
+                              <h1 className="text-md md:text-2xl font-bold ">
+                                {item.expression.toUpperCase()} (
+                                {item.expression.length} gambar)
+                              </h1>
+                            </div>
+                            <div className="flex items-center ">
                               <FontAwesomeIcon
                                 icon={faPoll}
-                                className="mr-3"
+                                className="mr-3 h-3 w-3 md:h-5 md:w-5"
                               ></FontAwesomeIcon>
-                              Average confidence:{' '}
-                              {Number(item.average_confidence.toFixed(2)) * 100}
-                              %
-                            </h1>
+                              <h1 className="text-md md:text-xl my-3 ">
+                                Average confidence:
+                              </h1>
+                              <h1 className="text-md md:text-xl m-3 ">
+                                {(item.average_confidence * 100).toFixed(2)}%
+                              </h1>
+                            </div>
                           </div>
                           <div className="w-full flex overflow-x-auto">
                             {item.image_urls.map((item, index) => {

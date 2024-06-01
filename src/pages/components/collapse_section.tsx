@@ -12,7 +12,7 @@ function CollapseSection(props: any) {
     <div className="w-full mb-5 border border-black p-3 rounded-lg hover:bg-slate-100">
       <div className="px-2 flex justify-between" {...getToggleProps()}>
         <div
-          className={`title text-xl ${
+          className={`title text-md md:text-xl ${
             isExpanded ? 'font-bold' : 'font-normal'
           }`}
         >
